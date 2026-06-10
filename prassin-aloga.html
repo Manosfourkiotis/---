@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="el" data-theme="dark" data-lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Πράσσειν Άλογα — Λάρισα</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #e0c070;
+    --radius: 0px;
+  }
+
+  [data-theme="dark"] {
+    --bg: #1C3A2F;
+    --bg2: #162e25;
+    --bg3: #0f2219;
+    --surface: rgba(255,255,255,0.04);
+    --border: rgba(201,168,76,0.2);
+    --text: #F7F3EC;
+    --text2: rgba(247,243,236,0.6);
+    --text3: rgba(247,243,236,0.35);
+    --nav-bg: rgba(28,58,47,0.97);
+    --footer-bg: rgba(0,0,0,0.25);
+  }
+
+  [data-theme="light"] {
+    --bg: #F7F3EC;
+    --bg2: #ede8df;
+    --bg3: #e3ddd3;
+    --surface: rgba(0,0,0,0.03);
+    --border: rgba(201,168,76,0.35);
+    --text: #1C3A2F;
+    --text2: rgba(28,58,47,0.6);
+    --text3: rgba(28,58,47,0.35);
+    --nav-bg: rgba(247,243,236,0.97);
+    --footer-bg: rgba(28,58,47,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    background: var(--nav-bg);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    gap: 1rem;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    opacity: 0.7;
+    cursor: pointer;
+    padding: 6px 10px;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .ctrl-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+
+  .ctrl-btn:hover { background: var(--gold); color: #1C3A2F; border-color: var(--gold); }
+
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 6px;
+    background: none;
+    border: none;
+    flex-shrink: 0;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--text);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 58px; left: 0; right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 199;
+    padding: 1rem 1.5rem 1.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    opacity: 0.8;
+  }
+
+  .mobile-menu a:last-child { border-bottom: none; }
+
+  .mobile-controls {
+    display: flex;
+    gap: 8px;
+    padding-top: 1rem;
+  }
+
+  .mobile-controls .ctrl-btn { flex: 1; text-align: center; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .hero-ornament {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0.7;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 10vw, 96px);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    line-height: 1.0;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+    margin-bottom: 2rem;
+  }
+
+  .hero-desc {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--text2);
+    max-width: 520px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s;
+    background: none;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .hero-cta:hover { background: var(--gold); color: #1C3A2F; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: var(--gold);
+    opacity: 0.4;
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollpulse {
+    0%, 100% { opacity: 0.2; transform: scaleY(1); }
+    50% { opacity: 0.6; transform: scaleY(1.1); }
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 5rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-full {
+    padding: 5rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .divider-icon {
+    font-size: 14px;
+    color: var(--gold);
+    opacity: 0.6;
+  }
+
+  /* ── MENU ── */
+  .menu-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .menu-tab {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    cursor: pointer;
+    color: var(--text2);
+    border-bottom: 2px solid transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    transition: color 0.2s, border-color 0.2s;
+    background: none;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .menu-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .menu-tab:hover { color: var(--text); }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 3rem;
+  }
+
+  .menu-category-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 1.5rem 0 0.75rem;
+    opacity: 0.85;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(128,128,128,0.1);
+    gap: 1rem;
+  }
+
+  .menu-item-left { flex: 1; min-width: 0; }
+
+  .menu-item-name {
+    font-size: 13.5px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .menu-item-desc {
+    font-size: 12px;
+    color: var(--text3);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .menu-item-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-slot {
+    aspect-ratio: 4/3;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .gallery-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .gallery-slot:hover img { transform: scale(1.04); }
+
+  .gallery-placeholder {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text3);
+    text-align: center;
+    padding: 1rem;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .contact-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    opacity: 0.85;
+  }
+
+  .contact-value {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .contact-value a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .hours-table {
+    width: 100%;
+    font-size: 13px;
+    border-collapse: collapse;
+  }
+
+  .hours-table td {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(128,128,128,0.08);
+  }
+
+  .hours-table td:first-child { color: var(--text2); }
+  .hours-table td:last-child { color: var(--text); text-align: right; }
+
+  .map-container {
+    margin-top: 2rem;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: 260px;
+    display: block;
+    border: none;
+    filter: grayscale(0.3);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--footer-bg);
+    padding: 2rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── LANG HIDDEN ── */
+  [data-lang="el"] .en { display: none; }
+  [data-lang="en"] .el { display: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .nav-controls { display: none; }
+    .hamburger { display: flex; }
+
+    .section { padding: 3.5rem 1.25rem; }
+    .section-full { padding: 3.5rem 1.25rem; }
+
+    .menu-grid { grid-template-columns: 1fr; gap: 0; }
+
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+
+    footer {
+      flex-direction: column;
+      text-align: center;
+      padding: 1.5rem 1.25rem;
+    }
+
+    .hero { padding: 7rem 1.5rem 5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Πράσσειν Άλογα</div>
+  <ul class="nav-links">
+    <li><a href="#menu-section" class="el">Μενού</a><a href="#menu-section" class="en">Menu</a></li>
+    <li><a href="#gallery-section" class="el">Φωτογραφίες</a><a href="#gallery-section" class="en">Gallery</a></li>
+    <li><a href="#contact-section" class="el">Επικοινωνία</a><a href="#contact-section" class="en">Contact</a></li>
+  </ul>
+  <div class="nav-controls">
+    <button class="ctrl-btn" id="lang-btn" onclick="toggleLang()">EN</button>
+    <button class="ctrl-btn" id="theme-btn" onclick="toggleTheme()">☀</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#menu-section" onclick="closeMobile()" class="el">Μενού</a>
+  <a href="#menu-section" onclick="closeMobile()" class="en">Menu</a>
+  <a href="#gallery-section" onclick="closeMobile()" class="el">Φωτογραφίες</a>
+  <a href="#gallery-section" onclick="closeMobile()" class="en">Gallery</a>
+  <a href="#contact-section" onclick="closeMobile()" class="el">Επικοινωνία</a>
+  <a href="#contact-section" onclick="closeMobile()" class="en">Contact</a>
+  <div class="mobile-controls">
+    <button class="ctrl-btn" onclick="toggleLang(); closeMobile();" id="lang-btn-m">EN</button>
+    <button class="ctrl-btn" onclick="toggleTheme(); closeMobile();" id="theme-btn-m">☀</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ornament el">— Λάρισα, Θεσσαλία —</div>
+  <div class="hero-ornament en">— Larissa, Thessaly —</div>
+  <h1 class="hero-title">Πράσσειν<br>Άλογα</h1>
+  <p class="hero-tagline el">Το αδύνατο, με στυλ.</p>
+  <p class="hero-tagline en">Doing the impossible, beautifully.</p>
+  <p class="hero-desc el">Ελληνική κουζίνα με μεσογειακό πνεύμα. Φρέσκα υλικά, αυθεντικές γεύσεις και μια κουζίνα που δεν ακολουθεί κανόνες.</p>
+  <p class="hero-desc en">Greek cuisine with a Mediterranean soul. Fresh ingredients, authentic flavours, and a kitchen that follows no rules.</p>
+  <a href="#menu-section" class="hero-cta el">Δείτε το Μενού</a>
+  <a href="#menu-section" class="hero-cta en">View the Menu</a>
+  <div class="scroll-hint">
+    <span class="el">κάτω</span>
+    <span class="en">scroll</span>
+  </div>
+</section>
+
+<!-- MENU -->
+<div class="section-full" id="menu-section">
+  <div class="section-inner">
+    <div class="section-eyebrow el">— Τι μαγειρεύουμε —</div>
+    <div class="section-eyebrow en">— What we cook —</div>
+    <h2 class="section-title el">Μενού</h2>
+    <h2 class="section-title en">Menu</h2>
+    <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+
+    <div class="menu-tabs" role="tablist">
+      <button class="menu-tab active el" role="tab" onclick="showTab('appetizers', this)">Ορεκτικά</button>
+      <button class="menu-tab active en" role="tab" onclick="showTab('appetizers', this)">Appetizers</button>
+      <button class="menu-tab el" role="tab" onclick="showTab('salads', this)">Σαλάτες</button>
+      <button class="menu-tab en" role="tab" onclick="showTab('salads', this)">Salads</button>
+      <button class="menu-tab el" role="tab" onclick="showTab('mains', this)">Κυρίως</button>
+      <button class="menu-tab en" role="tab" onclick="showTab('mains', this)">Main Courses</button>
+      <button class="menu-tab el" role="tab" onclick="showTab('pasta', this)">Pasta & Risotto</button>
+      <button class="menu-tab en" role="tab" onclick="showTab('pasta', this)">Pasta & Risotto</button>
+      <button class="menu-tab el" role="tab" onclick="showTab('drinks', this)">Ποτά & Κρασί</button>
+      <button class="menu-tab en" role="tab" onclick="showTab('drinks', this)">Drinks & Wine</button>
+    </div>
+
+    <!-- APPETIZERS -->
+    <div class="menu-panel active" id="tab-appetizers">
+      <div class="menu-grid">
+        <div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Ψητό ταλαγάνι</span><span class="en">Grilled talagani</span></div><div class="menu-item-desc"><span class="el">με σάλτσα μαύρης σταφίδας</span><span class="en">with black currants sauce</span></div></div><div class="menu-item-price">8,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Αλμυρό cheesecake</span><span class="en">Savory cheesecake</span></div><div class="menu-item-desc"><span class="el">με ελληνικά τυριά και ταρτάρ τομάτας</span><span class="en">with Greek cheeses and tomato tartare</span></div></div><div class="menu-item-price">9,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Κεφαλοτύρι σαγανάκι</span><span class="en">Kefalotyri saganaki</span></div><div class="menu-item-desc"><span class="el">τηγανητό σε παναρισμένη κρούστα</span><span class="en">fried breaded hard cheese</span></div></div><div class="menu-item-price">6,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Cheeseball donuts</span><span class="en">Cheeseball donuts</span></div><div class="menu-item-desc"><span class="el">με μέλι και άρωμα τριαντάφυλλου</span><span class="en">with honey and rose scent</span></div></div><div class="menu-item-price">8,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Gnocchi πατάτας</span><span class="en">Gnocchi potatoes</span></div><div class="menu-item-desc"><span class="el">με κρέμα, κοτόπουλο και μπέικον</span><span class="en">with creme, chicken and bacon powder</span></div></div><div class="menu-item-price">9,50</div></div>
+        </div>
+        <div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Σοταριστά μανιτάρια</span><span class="en">Sauteed mushrooms</span></div><div class="menu-item-desc"><span class="el">με σάλτσα ψητού, παρμεζάνα, κρουτόν και truffle oil</span><span class="en">with roast sauce, parmesan, croutons and truffle oil</span></div></div><div class="menu-item-price">9,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Κεφτέδες μελιτζάνας</span><span class="en">Eggplant patties</span></div><div class="menu-item-desc"><span class="el">με φέτα, ανθότυρο και απάκι σε σάλτσα τομάτας</span><span class="en">with feta, anthotyro and apaki in tomato sauce</span></div></div><div class="menu-item-price">8,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Hash browns</span><span class="en">Hash browns</span></div><div class="menu-item-desc"><span class="el">με τηγανητά αυγά</span><span class="en">with fried eggs</span></div></div><div class="menu-item-price">8,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Τηγανητές πατάτες</span><span class="en">French fries</span></div><div class="menu-item-desc"><span class="el">με σάλτσα "Πράσσειν Άλογα"</span><span class="en">with "Prassein Aloga" sauce</span></div></div><div class="menu-item-price">4,00</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SALADS -->
+    <div class="menu-panel" id="tab-salads">
+      <div class="menu-grid">
+        <div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Ελληνική σαλάτα</span><span class="en">Greek salad</span></div><div class="menu-item-desc"><span class="el">πράσινα φύλλα, cherry τομάτες, κρεμμύδι, πιπεριές, κάππαρη</span><span class="en">green leaves, cherry tomatoes, onions, peppers, capers</span></div></div><div class="menu-item-price">9,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Μπουράτα</span><span class="en">Burrata</span></div><div class="menu-item-desc"><span class="el">cherry τομάτες, τυρί μπουράτα, ρόκα, βασιλικός, ελαιόλαδο και κουκουνάρι</span><span class="en">cherry tomatoes, burrata cheese, rocket, basil olive oil and pine</span></div></div><div class="menu-item-price">10,00</div></div>
+        </div>
+        <div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Caesar's</span><span class="en">Caesar's</span></div><div class="menu-item-desc"><span class="el">σπιτική</span><span class="en">home made</span></div></div><div class="menu-item-price">9,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Ντάκος χαρουπιού</span><span class="en">Carob dakos</span></div><div class="menu-item-desc"><span class="el">τομάτα, φέτα, ανθότυρο, ελιές και κάππαρη</span><span class="en">tomato, feta cheese, anthotyro, olives and capers</span></div></div><div class="menu-item-price">9,00</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAINS -->
+    <div class="menu-panel" id="tab-mains">
+      <div class="menu-grid">
+        <div>
+          <p class="menu-category-label el">Κοτόπουλο & Χοιρινό</p>
+          <p class="menu-category-label en">Chicken & Pork</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Ψητό μπουτάκι κοτόπουλου</span><span class="en">Grilled chicken thigh fillet</span></div><div class="menu-item-desc"><span class="el">με λαδολέμονο και σύνθλιφτά baby πατατάκια</span><span class="en">with lemon oil and smashed baby potatoes</span></div></div><div class="menu-item-price">11,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Φιλέτο κοτόπουλου</span><span class="en">Chicken fillet</span></div><div class="menu-item-desc"><span class="el">με σάλτσα εσπεριδοειδών και πουρέ καρότου</span><span class="en">with citrus fruits sauce and carrot puree</span></div></div><div class="menu-item-price">12,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Φιλέτο κοτόπουλου à la crème</span><span class="en">Chicken fillet à la crème</span></div><div class="menu-item-desc"><span class="el">με μανιτάρια, μουστάρδα, ταραγκόν και ρύζι</span><span class="en">with mushrooms, mustard, tarragon & rice</span></div></div><div class="menu-item-price">13,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Μπριζόλα χοιρινή</span><span class="en">Pork chop</span></div><div class="menu-item-desc"><span class="el">με γλάσο δαμάσκηνου και πατάτες</span><span class="en">with plum glaze and potatoes</span></div></div><div class="menu-item-price">13,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Μπριζόλα χοιρινή με τσεκούρι</span><span class="en">Axed pork chop</span></div><div class="menu-item-desc"><span class="el">μαριναρισμένη σε μελάσα και bourbon με τηγανητές πατάτες</span><span class="en">marinated in molasses and bourbon with french fries</span></div></div><div class="menu-item-price">17,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Παντσέτα</span><span class="en">Pancetta</span></div><div class="menu-item-desc"><span class="el">με γλάσο bbq και baby πατατάκια</span><span class="en">glazed with bbq sauce and baby potatoes</span></div></div><div class="menu-item-price">13,50</div></div>
+          <p class="menu-category-label el">Θαλασσινά</p>
+          <p class="menu-category-label en">Fish & Seafood</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Σολομός</span><span class="en">Salmon</span></div><div class="menu-item-desc"><span class="el">με passion fruit και lime</span><span class="en">with passion fruit and lime</span></div></div><div class="menu-item-price">21,00</div></div>
+        </div>
+        <div>
+          <p class="menu-category-label el">Burgers</p>
+          <p class="menu-category-label en">Burgers</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Ψητά burgers</span><span class="en">Grilled burgers</span></div></div><div class="menu-item-price">10,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Burgers</span><span class="en">Burgers</span></div><div class="menu-item-desc"><span class="el">με κρέμα γκρουγιέρ και ρύζι</span><span class="en">with gruyere cream and rice</span></div></div><div class="menu-item-price">13,50</div></div>
+          <p class="menu-category-label el">Βοδινό & Μοσχάρι</p>
+          <p class="menu-category-label en">Beef</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Μπριζόλα βοδινή 700g</span><span class="en">Beef steak 700g</span></div><div class="menu-item-desc"><span class="el">με χωριάτικες πατάτες</span><span class="en">with country potatoes</span></div></div><div class="menu-item-price">26,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Rib eye black angus (Αργεντινής)</span><span class="en">Rib eye black angus (Argentine)</span></div><div class="menu-item-desc"><span class="el">με sticks γλυκοπατάτας και truffle mayo</span><span class="en">with sweet potato sticks and truffle mayo</span></div></div><div class="menu-item-price">31,00</div></div>
+          <p class="menu-category-label el">Pan Fried</p>
+          <p class="menu-category-label en">Pan Fried</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Κοτόπουλο</span><span class="en">Chicken</span></div><div class="menu-item-desc"><span class="el">με πιπεριές και μουστάρδα</span><span class="en">with peppers and mustard</span></div></div><div class="menu-item-price">11,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Χοιρινό</span><span class="en">Pork</span></div></div><div class="menu-item-price">11,00</div></div>
+          <p class="menu-category-label el">Πλατό</p>
+          <p class="menu-category-label en">Platters</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name el">Πλατό λουκάνικων</div><div class="menu-item-name en">Sausage platter</div></div><div class="menu-item-price">11,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name el">Πλατό τυριών (2/4 άτομα)</div><div class="menu-item-name en">Cheese platter (2/4 persons)</div></div><div class="menu-item-price">11 / 18</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name el">Πλατό αλλαντικών (2/4 άτομα)</div><div class="menu-item-name en">Cold cuts platter (2/4 persons)</div></div><div class="menu-item-price">11 / 18</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name el">Μικτό πλατό (2/4 άτομα)</div><div class="menu-item-name en">Cheese & cold cuts (2/4 persons)</div></div><div class="menu-item-price">14 / 28</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PASTA -->
+    <div class="menu-panel" id="tab-pasta">
+      <div class="menu-grid">
+        <div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Ριζότο κοτόπουλου</span><span class="en">Chicken risotto</span></div><div class="menu-item-desc"><span class="el">με μανιτάρια και truffle oil</span><span class="en">with mushrooms and truffle oil</span></div></div><div class="menu-item-price">13,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Ριζότο pomodoro</span><span class="en">Pomodoro risotto</span></div><div class="menu-item-desc"><span class="el">με μπέικον και τυρί νιβάτο</span><span class="en">with bacon and nivato cheese</span></div></div><div class="menu-item-price">12,00</div></div>
+        </div>
+        <div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Penne κοτόπουλου</span><span class="en">Chicken penne</span></div><div class="menu-item-desc"><span class="el">με μανιτάρια porcini και ελαφριά σάλτσα</span><span class="en">with porcini mushrooms and light sauce</span></div></div><div class="menu-item-price">13,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Γεμιστά ravioli</span><span class="en">Stuffed ravioli</span></div><div class="menu-item-desc"><span class="el">με carbonara σε σάλτσα παρμεζάνας</span><span class="en">with carbonara in parmesan sauce</span></div></div><div class="menu-item-price">14,00</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRINKS -->
+    <div class="menu-panel" id="tab-drinks">
+      <div class="menu-grid">
+        <div>
+          <p class="menu-category-label">Τσίπουρο / Tsipouro</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Καβαλαντζή / Κανναβού / Αποστολάκη</div><div class="menu-item-desc">100ml</div></div><div class="menu-item-price">6,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Τσελίκη / Καρδάση / Μπεγάρου</div><div class="menu-item-desc">100ml</div></div><div class="menu-item-price">6,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Μπαμπατζιμόπουλου / Τσελίκη Αγνώτερο</div><div class="menu-item-desc">200ml</div></div><div class="menu-item-price">15,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Δεκαράκι / Νδωνικό</div><div class="menu-item-desc">200ml</div></div><div class="menu-item-price">15,00</div></div>
+          <p class="menu-category-label el">Ούζο (200ml)</p>
+          <p class="menu-category-label en">Ouzo (200ml)</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Κατσαρός / Καρδάση / Καβαρτζή</div></div><div class="menu-item-price">15,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Αποστολάκη / Βαρβαγιάννη Μπλέ / Πράσινο</div></div><div class="menu-item-price">15,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Πλουμάρι / Ματαρέλλη / Πιτσιλαδί / Μίντ</div></div><div class="menu-item-price">15–16,00</div></div>
+          <p class="menu-category-label el">Μπύρες Draft</p>
+          <p class="menu-category-label en">Draft Beer</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Kaiser 330ml / 500ml</div></div><div class="menu-item-price">4,00 / 6,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Carlsberg 330ml / 500ml</div></div><div class="menu-item-price">4,00 / 6,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Mythos Ice / Schneider Weisse 330ml</div></div><div class="menu-item-price">5,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Grimbergen Double / Fischer / Lola IPA 330ml</div></div><div class="menu-item-price">6,00</div></div>
+          <p class="menu-category-label el">Αναψυκτικά</p>
+          <p class="menu-category-label en">Soft Drinks</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Coca-Cola / Zero / Light 250ml</div></div><div class="menu-item-price">2,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Three Cents Pink Grapefruit / Aegean Tonic 250ml</div></div><div class="menu-item-price">4,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name"><span class="el">Χυμοί Amita</span><span class="en">Amita Juices</span></div><div class="menu-item-desc">/ Red Bull</div></div><div class="menu-item-price">4,00 / 6,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name el">Νερό μεταλλικό 1lt</div><div class="menu-item-name en">Mineral water 1lt</div></div><div class="menu-item-price">2,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Pelegrino 750ml</div></div><div class="menu-item-price">6,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name el">Ανθρακούχο νερό</div><div class="menu-item-name en">Sparkling water</div></div><div class="menu-item-price">3,50</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Espresso</div></div><div class="menu-item-price">2,00</div></div>
+        </div>
+        <div>
+          <p class="menu-category-label el">Λευκό Κρασί (ποτ. / φιάλη)</p>
+          <p class="menu-category-label en">White Wine (glass / bottle)</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Καρπίδης Sauvignon Blanc</div><div class="menu-item-desc">ΠΓΕ Κρανώνας</div></div><div class="menu-item-price">6 / 23</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Καρπίδης Sauvignon Fume</div><div class="menu-item-desc">ΠΓΕ Κρανώνας, Sauvignon</div></div><div class="menu-item-price">30,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Κτήμα Μίγα, Blanc De Noir</div><div class="menu-item-desc">ΠΓΕ Τυρνάβου, Μοσχάτο</div></div><div class="menu-item-price">25,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Κτήμα Μίγα, Chardonnay Βαρέλι</div><div class="menu-item-desc">ΠΓΕ Τυρνάβου</div></div><div class="menu-item-price">34,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Κτήμα Νδούγκου, Μεθ΄ήμων Ακακία</div><div class="menu-item-desc">ΠΓΕ Θεσσαλίας, Sauvignon Blanc</div></div><div class="menu-item-price">21,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Κτήμα Γεροβασιλείου</div><div class="menu-item-desc">Malagousia</div></div><div class="menu-item-price">35,00</div></div>
+          <p class="menu-category-label el">Κόκκινο Κρασί (ποτ. / φιάλη)</p>
+          <p class="menu-category-label en">Red Wine (glass / bottle)</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Καρπίδης Merlot</div><div class="menu-item-desc">ΠΓΕ Κρανώνας</div></div><div class="menu-item-price">7 / 29</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Κτήμα Αλέκα Ραφαήλ</div><div class="menu-item-desc">Cabernet, Merlot</div></div><div class="menu-item-price">26,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Κτήμα Κατσαρού</div><div class="menu-item-desc">ΤΟ Κρονάς, Cabernet, Merlot</div></div><div class="menu-item-price">44,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Κτήμα Βιβλία Χώρα</div><div class="menu-item-desc">ΠΓΕ Παγγαίο, Sauvignon Blanc</div></div><div class="menu-item-price">38,00</div></div>
+          <p class="menu-category-label el">Ροζέ Κρασί</p>
+          <p class="menu-category-label en">Rosé Wine</p>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Καρπίδης Rosé, Sangiovese</div></div><div class="menu-item-price">21,00</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Κτήμα Ζαφειράκη Λημνιώνα</div><div class="menu-item-desc">ΠΓΕ Τυρνάβου, Λημνιώνα</div></div><div class="menu-item-price">7 / 28</div></div>
+          <div class="menu-item"><div class="menu-item-left"><div class="menu-item-name">Ktima Apostolaki Rose</div></div><div class="menu-item-price">27,00</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="section-full" id="gallery-section">
+  <div class="section-inner">
+    <div class="section-eyebrow el">— Η ατμόσφαιρά μας —</div>
+    <div class="section-eyebrow en">— Our atmosphere —</div>
+    <h2 class="section-title el">Φωτογραφίες</h2>
+    <h2 class="section-title en">Gallery</h2>
+    <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+    <div class="gallery-grid">
+      <div class="gallery-slot"><div class="gallery-placeholder el">Φωτογραφία εστιατορίου</div><div class="gallery-placeholder en">Restaurant photo</div></div>
+      <div class="gallery-slot"><div class="gallery-placeholder el">Φωτογραφία πιάτου</div><div class="gallery-placeholder en">Dish photo</div></div>
+      <div class="gallery-slot"><div class="gallery-placeholder el">Φωτογραφία χώρου</div><div class="gallery-placeholder en">Interior photo</div></div>
+      <div class="gallery-slot"><div class="gallery-placeholder el">Φωτογραφία bar</div><div class="gallery-placeholder en">Bar photo</div></div>
+      <div class="gallery-slot"><div class="gallery-placeholder el">Φωτογραφία εξωτερικού</div><div class="gallery-placeholder en">Exterior photo</div></div>
+      <div class="gallery-slot"><div class="gallery-placeholder el">Φωτογραφία βραδιάς</div><div class="gallery-placeholder en">Evening atmosphere</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section-full" id="contact-section">
+  <div class="section-inner">
+    <div class="section-eyebrow el">— Ελάτε να μας βρείτε —</div>
+    <div class="section-eyebrow en">— Come find us —</div>
+    <h2 class="section-title el">Επικοινωνία</h2>
+    <h2 class="section-title en">Contact</h2>
+    <div class="divider"><div class="divider-line"></div><span class="divider-icon">✦</span><div class="divider-line"></div></div>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-label el">Διεύθυνση</div>
+        <div class="contact-label en">Address</div>
+        <div class="contact-value">Απόλλωνος 9<br>Λάρισα 412 22</div>
+
+        <div class="contact-label el">Τηλέφωνο</div>
+        <div class="contact-label en">Phone</div>
+        <div class="contact-value"><a href="tel:2416007670">2416 007 670</a></div>
+
+        <div class="contact-label el">Κρατήσεις</div>
+        <div class="contact-label en">Reservations</div>
+        <div class="contact-value el">Καλέστε μας για κρατήσεις.</div>
+        <div class="contact-value en">Call us to make a reservation.</div>
+      </div>
+      <div>
+        <div class="contact-label el">Ωράριο Λειτουργίας</div>
+        <div class="contact-label en">Opening Hours</div>
+        <table class="hours-table">
+          <tr><td class="el">Δευτέρα – Κυριακή</td><td class="en">Monday – Sunday</td><td>12:00 – 03:00</td></tr>
+        </table>
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3055.3!2d22.4137374!3d39.6395015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x135889583be54911%3A0xa0be597531dc7972!2z0J_RgOCxz8Gz4rOw4rCy4rOw4rGz4rGxIOCwheCws-KwseKwuA!5e0!3m2!1sel!2sgr!4v1000000000000"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            title="Πράσσειν Άλογα στο χάρτη">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Πράσσειν Άλογα</div>
+  <div class="footer-copy el">© 2025 Πράσσειν Άλογα · Απόλλωνος 9, Λάρισα</div>
+  <div class="footer-copy en">© 2025 Prassein Aloga · 9 Apollonos St, Larissa</div>
+  <div class="footer-copy">Made with ♥ in Larissa</div>
+</footer>
+
+<script>
+  const html = document.documentElement;
+
+  function toggleTheme() {
+    const t = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', t);
+    const icon = t === 'dark' ? '☀' : '☾';
+    document.getElementById('theme-btn').textContent = icon;
+    const mb = document.getElementById('theme-btn-m');
+    if (mb) mb.textContent = icon;
+  }
+
+  function toggleLang() {
+    const l = html.getAttribute('data-lang') === 'el' ? 'en' : 'el';
+    html.setAttribute('data-lang', l);
+    html.setAttribute('lang', l);
+    const label = l === 'el' ? 'EN' : 'ΕΛ';
+    document.getElementById('lang-btn').textContent = label;
+    const mb = document.getElementById('lang-btn-m');
+    if (mb) mb.textContent = label;
+    syncActiveTabs(l);
+  }
+
+  function syncActiveTabs(lang) {
+    const activePanel = document.querySelector('.menu-panel.active');
+    if (!activePanel) return;
+    const id = activePanel.id.replace('tab-', '');
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    const tabs = document.querySelectorAll('.menu-tab.' + lang);
+    tabs.forEach(t => {
+      if (t.getAttribute('onclick').includes("'" + id + "'")) {
+        t.classList.add('active');
+      }
+    });
+  }
+
+  function showTab(id, btn) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    const lang = html.getAttribute('data-lang');
+    document.querySelectorAll('.menu-tab.' + lang).forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function toggleMobile() {
+    const menu = document.getElementById('mobile-menu');
+    const ham = document.getElementById('hamburger');
+    const open = menu.classList.toggle('open');
+    ham.classList.toggle('open', open);
+  }
+
+  function closeMobile() {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+
+  // Set initial active tab per lang
+  document.querySelectorAll('.menu-tab.el').forEach((t, i) => { if (i === 0) t.classList.add('active'); });
+  document.querySelectorAll('.menu-tab.en').forEach((t, i) => { if (i === 0) t.classList.add('active'); });
+</script>
+</body>
+</html>
